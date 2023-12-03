@@ -63,6 +63,8 @@ with st.sidebar:
 
 text_input = st.text_area(label="Input your text here", placeholder="If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that.")
 if st.button("Submit"):
+    if not text_input:
+        text_input = "If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that."
     analyze_text(text_input)
 
 if st.session_state.text_error:
