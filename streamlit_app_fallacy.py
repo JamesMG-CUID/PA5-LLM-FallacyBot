@@ -67,7 +67,12 @@ text_input = st.text_area(label="Input your text here", placeholder="If we let T
 if st.button("Submit"):
     if not text_input:
         text_input = "If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that."
-    analyze_text(text_input)
+    if st.session_state.n_requests >= 5:
+        st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
+    elif st.session_state.openai_api_key == "":
+        st.error("Please input your OpenAI API key in the sidebar to use this app.")
+    else:
+        analyze_text(text_input)
 
 if st.session_state.text_error:
     st.error(st.session_state.text_error)
