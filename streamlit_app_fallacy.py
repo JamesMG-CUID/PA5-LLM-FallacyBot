@@ -21,7 +21,7 @@ if "n_requests" not in st.session_state:
 
 
 # Define functions
-def analyze_text(text_input: str):
+def analyze_text(text_input: str="If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that."):
     if not text_input:
         st.session_state.text_error = "Please enter your text"
         return
