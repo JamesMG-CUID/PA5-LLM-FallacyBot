@@ -5,6 +5,11 @@ import openai
 # Initialize
 openai_api_key = None
 openai.api_key = ""
+st.session_state.text_error = None
+st.session_state.text = None
+st.session_state.n_requests = 0
+st.cache_data.clear()
+
 
 # Define functions
 def check_openai_api_key(openai_api_key: str):
@@ -56,8 +61,6 @@ explanation_text = """
     """
 
 st.markdown(explanation_text, unsafe_allow_html=True)
-st.session_state.text_error = None
-st.session_state.text = None
 
 text_spinner_placeholder = st.spinner()
 
