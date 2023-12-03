@@ -30,7 +30,7 @@ def analyze_text(text_input: str):
 st.set_page_config(page_title="FallacyBot", page_icon="🤖")
 explanation_text = """
 <h3 style = 'text-align: center;color:green'> FallacyBot </h3> 
-<p> <span style='text-align: center;color:green'>FallacyBot</span> checks for <span style='color:red'>fallacies</span> in your text.</p>
+<p style='text-align: center> <span style='text-align: center;color:green'>FallacyBot</span> checks for <span style='color:red'>fallacies</span> in your text.</p>
 <p> For your convenience, a default example is provided. If you don't input any text, the bot will use the example text. </p>
     """
 
