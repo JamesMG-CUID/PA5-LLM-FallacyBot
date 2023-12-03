@@ -4,6 +4,7 @@ import openai
 
 # Initialize
 openai_api_key = None
+openai.api_key = ""
 
 # Define functions
 def analyze_text(text_input: str):
