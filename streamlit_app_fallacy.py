@@ -57,14 +57,14 @@ with st.sidebar:
     st.session_state.openai_api_key = api_key_form.text_input("OpenAI API Key", key="api_key_form", type="password")
     api_key_form_submitted = api_key_form.form_submit_button("Submit")
 
-    if api_key_form_submitted:
-        if st.session_state.openai_api_key:
-            openai.api_key = st.session_state.openai_api_key
-            st.success("Your OpenAI API key was saved successfully!")
-        else:
-            api_key_form_submitted = False
-            st.info("Your OpenAI API key is invalid, please check to see if it is correctly inputted or contact OpenAI")
-            
+if api_key_form_submitted:
+    if st.session_state.openai_api_key:
+        openai.api_key = st.session_state.openai_api_key
+        st.success("Your OpenAI API key was saved successfully!")
+    else:
+        api_key_form_submitted = False
+        st.info("Your OpenAI API key is invalid, please check to see if it is correctly inputted or contact OpenAI")
+        
 with st.form(key="text_input_form"):
     text_input_form = st.form(key="text_input_form")
     text_input = text_input_form.text_area(key="text_input_form",label="Input your text here", placeholder="Ex. If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that.")
