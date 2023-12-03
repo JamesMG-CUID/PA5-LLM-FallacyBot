@@ -15,7 +15,7 @@ def analyze_text(text_input: str):
         with st.spinner("Please wait while your text is analyzed..."):
             prompt = text_input
             st.session_state.n_requests += 1
-            st.session_state.text = openai.ChatCompletion.create(
+            st.session_state.text = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 temperature=0.4,
                 top_p=0.8,
