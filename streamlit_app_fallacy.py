@@ -66,8 +66,8 @@ with st.sidebar:
             st.info("Your OpenAI API key is invalid, please check to see if it is correctly inputted or contact OpenAI")
         
 with st.form(key="text_input_form"):
-    text_input = text_input_form.text_area(key="text_input_form",label="Input your text here", placeholder="Ex. If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that.")
-    text_input_form_submitted = text_input_form.form_submit_button("Submit")
+    text_input = st.text_area(key="text_input_form",label="Input your text here", placeholder="Ex. If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that.")
+    text_input_form_submitted = st.form_submit_button("Submit")
 
 if not text_input:
     text_input = "If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that."
