@@ -59,7 +59,7 @@ with st.sidebar:
 
     if api_key_form_submitted:
         if True:                              #check_openai_api_key(openai_api_key):
-            openai.api_key = openai_api_key
+            openai.api_key = st.session_state.openai_api_key
             st.success("Your OpenAI API key was saved successfully!")
         else:
             st.info("Your OpenAI API key is invalid, please check to see if it is correctly inputted or contact OpenAI")
