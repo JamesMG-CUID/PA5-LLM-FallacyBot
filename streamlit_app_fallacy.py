@@ -34,19 +34,18 @@ def analyze_text(text_input: str):
         return
 
     with text_spinner_placeholder:
-        with st.spinner("Please wait while your text is analyzed..."):
-            prompt = text_input
-            st.session_state.n_requests += 1
-            st.session_state.text = openai.chat.completions.create(
-                model="gpt-3.5-turbo",
-                temperature=0.4,
-                top_p=0.8,
-                max_tokens=450,
-                messages=[
-                    {"role": "system", "content": "You are a fallacy checker bot that outputs in formatted html (Feel free to use color for emphasis). Provide a list of (Fairly simple) explanations if you find fallacies in user input."},
-                    {"role": "user", "content": f"Provide a list of fallacies from this text and explain what the fallacies are/mean (If there are non the just say 'Fallacy-Free!'): {prompt}"},
-                ]
-            )
+        prompt = text_input
+        st.session_state.n_requests += 1
+        st.session_state.text = openai.chat.completions.create(
+            model="gpt-3.5-turbo",
+            temperature=0.4,
+            top_p=0.8,
+            max_tokens=450,
+            messages=[
+                {"role": "system", "content": "You are a fallacy checker bot that outputs in formatted html (Feel free to use color for emphasis). Provide a list of (Fairly simple) explanations if you find fallacies in user input."},
+                {"role": "user", "content": f"Provide a list of fallacies from this text and explain what the fallacies are/mean (If there are non the just say 'Fallacy-Free!'): {prompt}"},
+            ]
+        )
 
 # Render Streamlit page
 st.set_page_config(page_title="FallacyBot", page_icon="🤖")
