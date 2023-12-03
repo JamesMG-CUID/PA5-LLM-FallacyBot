@@ -48,7 +48,7 @@ if "n_requests" not in st.session_state:
 
 with st.sidebar:
     api_key_form = st.form(key="api_key_form")
-    openai_api_key = api_key_form.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
+    openai_api_key = api_key_form.text_input("OpenAI API Key", key="api_key_form", type="password")
     api_key_form_submitted = api_key_form.form_submit_button("Submit")
 
     if api_key_form_submitted:
