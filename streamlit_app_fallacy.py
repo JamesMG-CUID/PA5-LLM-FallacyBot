@@ -3,16 +3,24 @@ import streamlit as st
 import openai
 
 # Initialize
-st.session_state.openai_api_key = ""
-openai.api_key = ""
-st.session_state.text_error = None
-st.session_state.text = None
-st.session_state.n_requests = 0
 st.cache_data.clear()
+if "openai_api_key" not in st.session_state:
+    st.session_state.openai_api_key = ""
+
+openai.api_key = st.session_state.openai_api_key
+
+if "text_error" not in st.session_state:
+    st.session_state.text_error = None
+
+if "text" not in st.session_state:
+    st.session_state.text = None
+
+if "n_requests" not in st.session_state:
+    st.session_state.n_requests = 0
+
 
 
 # Define functions
-
 def analyze_text(text_input: str):
     if not text_input:
         st.session_state.text_error = "Please enter your text"
@@ -43,8 +51,6 @@ st.markdown(explanation_text, unsafe_allow_html=True)
 
 text_spinner_placeholder = st.spinner()
 
-if "n_requests" not in st.session_state:
-    st.session_state.n_requests = 0
 
 with st.sidebar:
     api_key_form = st.form(key="api_key_form")
@@ -58,10 +64,11 @@ with st.sidebar:
         else:
             api_key_form_submitted = False
             st.info("Your OpenAI API key is invalid, please check to see if it is correctly inputted or contact OpenAI")
-
-text_input_form = st.form(key="text_input_form")
-text_input = text_input_form.text_area(key="text_input_form",label="Input your text here", placeholder="Ex. If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that.")
-text_input_form_submitted = text_input_form.form_submit_button("Submit")
+            
+with st.form(key="text_input_form"):
+    text_input_form = st.form(key="text_input_form")
+    text_input = text_input_form.text_area(key="text_input_form",label="Input your text here", placeholder="Ex. If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that.")
+    text_input_form_submitted = text_input_form.form_submit_button("Submit")
 
 if not text_input:
     text_input = "If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that."
