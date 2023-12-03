@@ -24,6 +24,8 @@ def analyze_text(text_input):
     if not text_input:
         st.session_state.text_error = "Please enter your text"
         return
+    else:
+        st.session_state.text_error = None
 
     with text_spinner_placeholder:
         st.session_state.n_requests += 1
