@@ -21,7 +21,7 @@ def analyze_text(text_input: str):
                 top_p=0.8,
                 max_tokens=450,
                 messages=[
-                    {"role": "system", "content": "You are a fallacy checker bot that outputs in formatted html. Provide a list of (Fairly simple) explanations if you find fallacies in user input."},
+                    {"role": "system", "content": "You are a fallacy checker bot that outputs in formatted html (Feel free to use color for emphasis). Provide a list of (Fairly simple) explanations if you find fallacies in user input."},
                     {"role": "user", "content": f"Check this text for fallacies and explain what the fallacies are/mean: {prompt}"},
                 ]
             )
@@ -29,8 +29,8 @@ def analyze_text(text_input: str):
 # Render Streamlit page
 st.set_page_config(page_title="FallacyBot", page_icon="🤖")
 explanation_text = """
-<h3 style = 'color:green> FallacyBot </h3> 
-<p> <span style='color:green'>FallacyBot</span> is a bot that checks for <span style='color:red'>fallacies</span> in your text.</p>
+<h3 style = 'text-align: center;color:green'> FallacyBot </h3> 
+<p> <span style='color:green'>FallacyBot</span> checks for <span style='color:red'>fallacies</span> in your text.</p>
 <p> For your convenience, a default example is provided. If you don't input any text, the bot will use the example text. </p>
     """
 
