@@ -12,26 +12,6 @@ st.cache_data.clear()
 
 
 # Define functions
-def check_openai_api_key(openai_api_key: str):
-    try:
-        openai.api_key = openai_api_key
-        response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
-                temperature=0.4,
-                top_p=0.8,
-                max_tokens=5,
-                messages=[
-                    {"role": "system", "content": "Test"},              
-                ]
-            )
-    except Exception as ex:
-        return False
-    else:
-        return True
-
-            
-        
-    
 
 def analyze_text(text_input: str):
     if not text_input:
@@ -59,7 +39,6 @@ explanation_text = """
 <h6 style='text-align: center'> Checking for <span style='color:red'>fallacies</span> in your text since 2023!</h6>
 <p> For your convenience, a default example is provided. If you don't input any text, the bot will use the example text. </p>
     """
-
 st.markdown(explanation_text, unsafe_allow_html=True)
 
 text_spinner_placeholder = st.spinner()
@@ -73,14 +52,15 @@ with st.sidebar:
     api_key_form_submitted = api_key_form.form_submit_button("Submit")
 
     if api_key_form_submitted:
-        if  check_openai_api_key(openai_api_key):
+        if openai_api_key:
             openai.api_key = openai_api_key
             st.success("Your OpenAI API key was saved successfully!")
         else:
+            api_key_form_submitted = False
             st.info("Your OpenAI API key is invalid, please check to see if it is correctly inputted or contact OpenAI")
 
 text_input_form = st.form(key="text_input_form")
-text_input = text_input_form.text_area(label="Input your text here", placeholder="Ex. If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that.")
+text_input = text_input_form.text_area(key="text_input_form",label="Input your text here", placeholder="Ex. If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that.")
 text_input_form_submitted = text_input_form.form_submit_button("Submit")
 
 if not text_input:
