@@ -29,9 +29,9 @@ def analyze_text(text_input: str):
 # Render Streamlit page
 st.set_page_config(page_title="FallacyBot", page_icon="🤖")
 explanation_text = """
-    Fallacies are errors in reasoning that can make an argument invalid or unsound. Identifying fallacies is crucial for critical thinking and effective communication. 
-
-    For your convenience, a default example is provided. If you don't input any text, the bot will use the example text.
+<h3 style = 'color:> FallacyBot </h3> 
+<p> <span style='color:green'>FallacyBot</span> is a bot that checks for <span style='color:red'>fallacies</span> in your text.</p>
+<p> For your convenience, a default example is provided. If you don't input any text, the bot will use the example text. </p>
     """
 
 st.markdown(explanation_text, unsafe_allow_html=True)
@@ -73,5 +73,5 @@ if st.session_state.text_error:
 if st.session_state.text:
     st.markdown("""---""")
     output = st.session_state.text
-    st.markdown(f"<h3 style='color: #3498db;'>Here's what FallacyBot has to say:</h3><p style='color: #2ecc71;'>\t{output.choices[0].message.content}</p>", unsafe_allow_html=True)
+    st.markdown(f"<h3 style='color: green;'>Here's what FallacyBot has to say:</h3><p style='color: white;'>\t{output.choices[0].message.content}</p>", unsafe_allow_html=True)
     image_spinner_placeholder = st.empty()
