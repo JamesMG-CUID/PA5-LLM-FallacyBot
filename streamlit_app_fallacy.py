@@ -20,6 +20,22 @@ if "n_requests" not in st.session_state:
     st.session_state.n_requests = 0
 
 # Define functions
+
+def generate_fallacy():
+    with image_spinner_placeholder:
+        prompt = openai.chat.completions.create(
+            model="gpt-3.5-turbo",
+            temperature=0.4,
+            top_p=0.8,
+            max_tokens=450,
+            messages=[
+                {"role": "system", "content": f"You are a fallacy generator bot."},
+                {"role": "user", "content": f"Generate a random fallacy."},
+            ]
+        )
+        return prompt.choices[0].message.content
+    
+
 def analyze_text(text_input):
     if not text_input:
         st.session_state.text_error = "Please enter your text"
@@ -48,6 +64,7 @@ explanation_text = """
 <h3 style='text-align: center; color: green;'> FallacyBot </h3>
 <h6 style='text-align: center'> Checking for <span style='color:red'>fallacies</span> in your text since 2023!</h6>
 <p> For your convenience, a default example is provided. If you don't input any text, the bot will use the example text. </p>
+<p> Fallacy (N.) - A mistaken belief, especially one based on unsound argument. </p>
 """
 st.markdown(explanation_text, unsafe_allow_html=True)
 
@@ -73,6 +90,16 @@ if st.button("Submit"):
         st.error("Please input your OpenAI API key in the sidebar to use this app.")
     else:
         analyze_text(text_input)
+        
+if st.button("Generate Fallacy and Analyze"):
+    if st.session_state.n_requests >= 5:
+        st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
+    elif st.session_state.openai_api_key == "":
+        st.error("Please input your OpenAI API key in the sidebar to use this app.")
+    else:
+        analyze_text(generate_fallacy())
+        
+
 
 if st.session_state.text_error:
     st.error(st.session_state.text_error)
