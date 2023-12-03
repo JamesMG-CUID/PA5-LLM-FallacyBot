@@ -67,8 +67,7 @@ if not text_input:
     text_input = "If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that."
 else:     
     analyse_text(text_input)
-    
-    
+        
 
 text_spinner_placeholder = st.empty()
 
@@ -78,7 +77,7 @@ if st.session_state.text_error:
 if st.session_state.text:
     st.markdown("""---""")
     output = st.session_state.text
-    st.markdown(f"<h3>Here's what your GrammarBuddy has to say: </h3><p>\t{output.choices[0].message.content}</p>", unsafe_allow_html=True)
+    st.markdown(f"<h3>Here's what FallacyBot has to say: </h3><p>\t{output.choices[0].message.content}</p>", unsafe_allow_html=True)
     image_spinner_placeholder = st.empty()
     
     
