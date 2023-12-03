@@ -66,7 +66,7 @@ with st.sidebar:
 
 
 text_input = st.text_area(label="Input your text here", placeholder="If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that.")
-text_input_form_submitted = st.button("Submit", on_click=analyze_text, args=(text_input))
+text_input_form_submitted = st.button("Submit", on_click=analyze_text(text_input))
 
 text_spinner_placeholder = st.empty()
 
