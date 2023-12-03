@@ -54,6 +54,7 @@ text_input_form_submitted = text_input_form.form_submit_button("Submit")
 
 if not text_input:
     text_input = "If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that."
+    analyze_text(text_input)
 else:
     analyze_text(text_input)
 
