@@ -54,26 +54,19 @@ text_spinner_placeholder = st.spinner()
 
 with st.sidebar:
     api_key_form = st.form(key="api_key_form")
-    st.session_state.openai_api_key = api_key_form.text_input("OpenAI API Key", key="api_key_form", type="password")
+    openai_api_key = api_key_form.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
     api_key_form_submitted = api_key_form.form_submit_button("Submit")
 
     if api_key_form_submitted:
-        if st.session_state.openai_api_key:
-            openai.api_key = st.session_state.openai_api_key
+        if True:                              #check_openai_api_key(openai_api_key):
+            openai.api_key = openai_api_key
             st.success("Your OpenAI API key was saved successfully!")
         else:
-            api_key_form_submitted = False
             st.info("Your OpenAI API key is invalid, please check to see if it is correctly inputted or contact OpenAI")
-        
-with st.form(key="text_input_form"):
-    text_input = st.text_area(key="text_input_form",label="Input your text here", placeholder="Ex. If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that.")
-    text_input_form_submitted = st.form_submit_button("Submit")
 
-if not text_input:
-    text_input = "If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that."
-    analyze_text(text_input)
-else:
-    analyze_text(text_input)
+
+text_input = st.text_area(label="Input your text here", placeholder="If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that.")
+text_input_form_submitted = st.button("Submit", on_click=analyze_text, args=(text_input))
 
 text_spinner_placeholder = st.empty()
 
