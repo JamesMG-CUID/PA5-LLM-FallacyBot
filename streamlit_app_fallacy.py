@@ -7,6 +7,27 @@ openai_api_key = None
 openai.api_key = ""
 
 # Define functions
+def check_openai_api_key(openai_api_key: str):
+    try:
+        openai.api_key = openai_api_key
+        response = openai.chat.completions.create(
+            model="gpt-3.5-turbo",
+                temperature=0.4,
+                top_p=0.8,
+                max_tokens=5,
+                messages=[
+                    {"role": "system", "content": "Test"},              
+                ]
+            )
+    except Exception as ex:
+        return False
+    else:
+        return True
+
+            
+        
+    
+
 def analyze_text(text_input: str):
     if not text_input:
         st.session_state.text_error = "Please enter your text"
@@ -50,7 +71,7 @@ with st.sidebar:
     api_key_form_submitted = api_key_form.form_submit_button("Submit")
 
     if api_key_form_submitted:
-        if True:  # check_openai_api_key(openai_api_key):
+        if  check_openai_api_key(openai_api_key):
             openai.api_key = openai_api_key
             st.success("Your OpenAI API key was saved successfully!")
         else:
