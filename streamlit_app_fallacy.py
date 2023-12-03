@@ -39,6 +39,8 @@ def generate_fallacy():
     
 
 def analyze_text(text_input):
+    text_spinner_placeholder = st.spinner()
+
     if not text_input:
         st.session_state.text_error = "Please enter your text"
         return
