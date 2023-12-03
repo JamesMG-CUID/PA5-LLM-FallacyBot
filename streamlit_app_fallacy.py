@@ -73,5 +73,5 @@ if st.session_state.text_error:
 if st.session_state.text:
     st.markdown("""---""")
     output = st.session_state.text
-    st.markdown(f"<h3 style='color: green;'>Here's what FallacyBot has to say:</h3><p style='color: white;'>\t{output.choices[0].message.content}</p>", unsafe_allow_html=True)
+    st.markdown(f"<h3 style='color: green;'>Here's what FallacyBot has to say:</h3><p style='color: white;'><br><p><i>\"{text_input}\"</i></p><br>{output.choices[0].message.content}</p>", unsafe_allow_html=True)
     image_spinner_placeholder = st.empty()
