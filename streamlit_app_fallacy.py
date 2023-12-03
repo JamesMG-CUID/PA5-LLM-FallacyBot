@@ -18,11 +18,13 @@ if "text" not in st.session_state:
 
 if "n_requests" not in st.session_state:
     st.session_state.n_requests = 0
+    
+text_spinner_placeholder = st.spinner()
 
 # Define functions
 
 def generate_fallacy():
-    with image_spinner_placeholder:
+    with text_spinner_placeholder:
         prompt = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             temperature=0.4,
@@ -67,8 +69,6 @@ explanation_text = """
 <p> Fallacy (N.) - A mistaken belief, especially one based on unsound argument. </p>
 """
 st.markdown(explanation_text, unsafe_allow_html=True)
-
-text_spinner_placeholder = st.spinner()
 
 with st.sidebar:
     api_key_form = st.form(key="api_key_form")
