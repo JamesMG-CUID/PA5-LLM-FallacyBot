@@ -10,7 +10,7 @@ api_key_form_submitted = False
 
 # Define functions
 
-def analyse_text(text_input: str, strictness: str):
+def analyse_text(text_input: str):
     if not text_input:
         st.session_state.text_error = "Please enter your text"
         return
@@ -26,8 +26,8 @@ def analyse_text(text_input: str, strictness: str):
                 top_p = 0.8,
                 max_tokens = 450,
                 messages=[
-                    {"role": "system", "content": f"You are a grammar checker bot that outputs in formatted html. Check the following text for grammar mistakes in the context of {strictness} Correct the errors and provide a list of (Fairly simple) explanations."},
-                    {"role": "user", "content": f"Please fix this, highlighting any changes in green and, more importantly, showing the original with mistakes in red: {prompt}"},
+                    {"role": "system", "content": f"You are a fallacy checker bot that outputs in formatted html. Check the following text for fallacies. Correct the errors and provide a list of (Fairly simple) explanations."},
+                    {"role": "user", "content": f"Check this text for fallacies and explain what the fallacies are/mean: {prompt}"},
                     ]
                 )
             )
@@ -35,7 +35,7 @@ def analyse_text(text_input: str, strictness: str):
 
 
 # Render Streamlit page
-st.set_page_config(page_title="GrammarBuddy", page_icon="🤖")
+st.set_page_config(page_title="FallacyBot", page_icon="🤖")
 st.session_state.text_error = None
 st.session_state.text = None
 
@@ -60,17 +60,13 @@ with st.sidebar:
 
 
 text_input_form = st.form(key = "text_input_form")
-text_input = text_input_form.text_area(label="Input your text here", placeholder="Mary hadn't a little lamb.")
-strictness = text_input_form.text_area(label="How strict should the checker be?", placeholder="(e.g. academic (default), slang, business)", height=50)
+text_input = text_input_form.text_area(label="Input your text here", placeholder="Ex. If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that.")
 text_input_form_submitted = text_input_form.form_submit_button("Submit")
 
-
-if not strictness:
-    strictness = "academic"
 if not text_input:
-    st.info("Please add some text to continue.")
+    text_input = "If we let Tommy skip school, then soon all the kids will be skipping school, and we can't have that."
 else:     
-    analyse_text(text_input, strictness)
+    analyse_text(text_input)
     
     
 
@@ -83,10 +79,6 @@ if st.session_state.text:
     st.markdown("""---""")
     output = st.session_state.text
     st.markdown(f"<h3>Here's what your GrammarBuddy has to say: </h3><p>\t{output.choices[0].message.content}</p>", unsafe_allow_html=True)
-
-
-    # st.write(f":red[{text_input}]")
-    # st.text_area(label="Corrected", value=f"{output.choices[0].message.content}", height=400)
     image_spinner_placeholder = st.empty()
     
     
