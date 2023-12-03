@@ -35,7 +35,7 @@ def generate_fallacy():
                 {"role": "user", "content": f"Generate a random fallacy."},
             ]
         )
-        return prompt.choices[0].message.content
+    return prompt.choices[0].message.content
     
 
 def analyze_text(text_input):
