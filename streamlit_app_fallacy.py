@@ -35,7 +35,10 @@ text_spinner_placeholder = st.spinner()
 
 # Define functions
 
-def generate_fallacy(fallacy_type = "random"):      #if fallacy_type is not specified, generate a random fallacy        
+def generate_fallacy(fallacy_type = "random"):      #if fallacy_type is not specified, generate a random fallacy
+    if fallacy_type == "random":
+        fallacy_type = random.choice(list(fallacy_dict.keys()))      # Randomly select a fallacy type if none was specified
+                
     prompt = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         temperature=0.7,
