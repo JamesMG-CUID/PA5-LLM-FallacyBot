@@ -111,6 +111,7 @@ if st.button("Generate a Random Fallacy and Analyze it!", key="generate_button")
         analyze_text(text_input)
         
 fallacy_type = st.selectbox(
+    key="fallacy_type_selectbox",
     label="Generate text containing a fallacy of this type:",
     index=0,
     options=[fallacy_name for fallacy_name in fallacy_dict.keys()]
