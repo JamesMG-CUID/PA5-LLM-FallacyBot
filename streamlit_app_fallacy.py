@@ -101,7 +101,8 @@ if st.button("Generate Fallacy and Analyze", key="generate_button"):
         st.error("Please input your OpenAI API key in the sidebar to use this app.")
     else:
         #st.error(generate_fallacy())
-        analyze_text(generate_fallacy())
+        text_input = generate_fallacy()
+        analyze_text(text_input)
         
 
 
