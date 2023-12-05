@@ -133,7 +133,7 @@ if current_mode == "Generate a Fallacy of a Specific Type":
         index=0,
         options=[fallacy_name for fallacy_name in fallacy_dict.keys()]
     )
-    st.markdown(f"<p style='font-size: calc(10px + 0.390625vw); font-style: italic; font-color: #777777;>{fallacy_type}: {fallacy_dict[fallacy_type]}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='font-size: calc(10px + 0.390625vw); font-style: italic;>{fallacy_type}: {fallacy_dict[fallacy_type]}</p>", unsafe_allow_html=True)
     
     if st.button("Generate a Fallacy of this Type and Analyze it!", key="generate_custom_type_button"):
         if st.session_state.n_requests >= max_requests:
