@@ -57,7 +57,7 @@ def analyze_text(text_input):
             top_p=0.85,
             max_tokens=500,
             messages=[
-                {"role": "system", "content": "You are a fallacy checker bot that provides a list of (Fairly simple) explanations of fallacies in user input. (If you find none at all, just say 'Fallacy-free!')").)"},
+                {"role": "system", "content": "You are a fallacy checker bot that provides a list of (Fairly simple) explanations of fallacies in user input. (If you find none at all, just say 'Fallacy-free!')" },
                 {"role": "user", "content": f"Provide a (low-redundancy) list of fallacies from this text and explain what the fallacies are/mean : {text_input}"},
             ]
         )
