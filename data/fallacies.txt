@@ -1,6 +1,7 @@
 Accent: Emphasis that changes the meaning of the sentence.
 Accident: A general rule used to explain a specific case not covered by it.
 Affirming the Consequent: If A then B. B is true, so A is true.
+Ad Hominem: Attacking the person/people making an argument rather than the argument itself.
 Amphiboly: A sentence has two different meanings.
 Appeal to Authority: Referencing an 'expert'.
 Appeal to Common Belief: If others believe it to be true, it must be true.
