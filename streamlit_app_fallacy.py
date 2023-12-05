@@ -85,7 +85,7 @@ with st.sidebar:
         st.success("Your OpenAI API key was saved successfully!")
 
 text_input = st.text_area(label="Input your text here", placeholder="If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that.")
-if st.button("Submit"):
+if st.button("Submit", key="submit_button"):
     if not text_input:
         text_input = "If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that."
     if st.session_state.n_requests >= max_requests:
@@ -95,7 +95,7 @@ if st.button("Submit"):
     else:
         analyze_text(text_input)
         
-if st.button("Generate Fallacy and Analyze"):
+if st.button("Generate Fallacy and Analyze", key="generate_button"):
     if st.session_state.n_requests >= max_requests:
         st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
     elif st.session_state.openai_api_key == "":
