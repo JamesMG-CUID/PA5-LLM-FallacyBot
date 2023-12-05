@@ -53,12 +53,11 @@ def analyze_text(text_input):
         st.session_state.n_requests += 1
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
-            temperature=0.4,
-            top_p=0.8,
+            temperature=0.5,
             max_tokens=450,
             messages=[
                 {"role": "system", "content": "You are a fallacy checker bot that outputs in formatted html (Feel free to use color for emphasis). Provide a list of (Fairly simple) explanations if you find fallacies in user input."},
-                {"role": "user", "content": f"Provide a list of fallacies from this text and explain what the fallacies are/mean (If there are non the just say 'Fallacy-Free!'): {text_input}"},
+                {"role": "user", "content": f"Provide a list of fallacies from this text and explain what the fallacies are/mean (If there are none then just say 'Fallacy-Free!'): {text_input}"},
             ]
         )
         st.session_state.text = response
@@ -101,7 +100,8 @@ if st.button("Generate Fallacy and Analyze", key="generate_button"):
     elif st.session_state.openai_api_key == "":
         st.error("Please input your OpenAI API key in the sidebar to use this app.")
     else:
-        analyze_text(generate_fallacy())
+        st.error(generate_fallacy())
+        #analyze_text(generate_fallacy())
         
 
 
