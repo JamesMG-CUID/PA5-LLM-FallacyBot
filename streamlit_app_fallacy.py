@@ -53,7 +53,8 @@ def generate_fallacy(fallacy_type = "random"):
     
 
 def analyze_text(text_input):
-    text_spinner_placeholder = st.spinner()
+    wait_message_list = ["Beep Boop, Please wait a moment...", "FallacyBot is analyzing your text...", "Just a moment human, I'm thinking..."] 
+    text_spinner_placeholder = st.spinner(text=random.choice(wait_message_list))
 
     if not text_input:
         st.session_state.text_error = "Please enter your text"
@@ -133,7 +134,7 @@ if current_mode == "Generate a Fallacy of a Specific Type":
         options=[fallacy_name for fallacy_name in fallacy_dict.keys()]
     )
     st.markdown(f"<p style='font-size: calc(10px + 0.390625vw); font-style: italic; font-color: #777777;>{fallacy_type}: {fallacy_dict[fallacy_type]}</p>", unsafe_allow_html=True)
-
+    
     if st.button("Generate a Fallacy of this Type and Analyze it!", key="generate_custom_type_button"):
         if st.session_state.n_requests >= max_requests:
             st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
@@ -146,7 +147,8 @@ if current_mode == "Generate a Fallacy of a Specific Type":
 
             
 ############################ MODE THREE ##########################################
-if current_mode == "Generate a Random Fallacy":        
+if current_mode == "Generate a Random Fallacy":
+    st.divider()        
     if st.button("Generate a Random Fallacy and Analyze it!", key="generate_random_button"):
         if st.session_state.n_requests >= max_requests:
             st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
