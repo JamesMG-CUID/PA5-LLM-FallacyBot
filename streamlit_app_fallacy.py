@@ -91,6 +91,8 @@ with st.sidebar:
         st.session_state.openai_api_key = openai_api_key
         openai.api_key = st.session_state.openai_api_key
         st.success("Your OpenAI API key was saved successfully!")
+
+############################ MODE SELECTOR ##########################################
         
 current_mode = st.selectbox(
     key="current_mode_selectbox",
@@ -117,22 +119,23 @@ if current_mode == "Analyze Your Text":
             analyze_text(text_input)
 
 ############################ MODE TWO ##########################################
-fallacy_type = st.selectbox(
-    key="fallacy_type_selectbox",
-    label="Generate text containing a fallacy of this type:",
-    index=0,
-    options=[fallacy_name for fallacy_name in fallacy_dict.keys()]
-)
-st.markdown(f"<p style='font-size: calc(10px + 0.390625vw); font-style: italic; font-color: #777777;>{fallacy_dict[fallacy_type]}</p>", unsafe_allow_html=True)
+if current_mode == "Generate a Fallacy of a Specific Type":
+    fallacy_type = st.selectbox(
+        key="fallacy_type_selectbox",
+        label="Generate text containing a fallacy of this type:",
+        index=0,
+        options=[fallacy_name for fallacy_name in fallacy_dict.keys()]
+    )
+    st.markdown(f"<p style='font-size: calc(10px + 0.390625vw); font-style: italic; font-color: #777777;>{fallacy_dict[fallacy_type]}</p>", unsafe_allow_html=True)
 
-if st.button("Generate a Fallacy of this Type and Analyze it!", key="generate_custom_type_button"):
-    if st.session_state.n_requests >= max_requests:
-        st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
-    elif st.session_state.openai_api_key == "":
-        st.error("Please input your OpenAI API key in the sidebar to use this app.")
-    else:
-        text_input = generate_fallacy(fallacy_type)
-        analyze_text(text_input)
+    if st.button("Generate a Fallacy of this Type and Analyze it!", key="generate_custom_type_button"):
+        if st.session_state.n_requests >= max_requests:
+            st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
+        elif st.session_state.openai_api_key == "":
+            st.error("Please input your OpenAI API key in the sidebar to use this app.")
+        else:
+            text_input = generate_fallacy(fallacy_type)
+            analyze_text(text_input)
 
             
 ############################ MODE THREE ##########################################
@@ -146,7 +149,6 @@ if current_mode == "Generate a Random Fallacy":
             #st.error(generate_fallacy())
             text_input = generate_fallacy()
             analyze_text(text_input)       
-
 
 
 if st.session_state.text_error:
