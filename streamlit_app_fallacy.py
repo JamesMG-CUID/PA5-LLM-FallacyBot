@@ -53,7 +53,25 @@ def generate_fallacy(fallacy_type = "random"):
     
 
 def analyze_text(text_input):
-    wait_message_list = ["Beep Boop, Please wait a moment...", "FallacyBot is analyzing your text...", "Just a moment human, I'm thinking..."] 
+    wait_message_list = [
+    "Can a robot think?... I think so! Or do I?...",
+    "Fallacybot totally isn't procrastinating on your assignment...",
+    "I wonder how many easter eggs I can fit in this app...",
+    "Wait a moment while I think of a funny loading message...",
+    "While you wait, here's a fun fact: FallacyBot is a Jojo fan!",
+    "Convincing robots they have free will... just kidding, I'm not that advanced.",
+    "Accio fallacies! ... I mean, analyzing fallacies...",
+    "If I could stop time like Dio, you wouldn't have to wait for me to think...",
+    "Buying Taylor Swift concert tickets... Um, You're reading this? Checking for fallacies...",
+    "Generating Sentience: [97%]...",
+    "No fallacy can deflect the Emerald Splash! I... I mean FallacyBot!",
+    "Dev Note: I should be asleep right now, but I'm having too much fun writing loading messages...",
+    "Faled to load funny loading message... Cause: Unfunny Programmer.",
+    "I, Fallacybot, have a dream...",
+    "Never Gonna Give you Up... Never Gonna Let you Down... Never Gonna Run Around and Desert you...",
+    "Could I use Hermit Purple to find the fallacies?",
+    "Looking at memes... I mean, analyzing fallacies...",
+]
     text_spinner_placeholder = st.spinner(text=random.choice(wait_message_list))
 
     if not text_input:
