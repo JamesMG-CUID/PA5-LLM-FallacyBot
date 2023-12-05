@@ -29,6 +29,7 @@ if "n_requests" not in st.session_state:
     st.session_state.n_requests = 0
 
 max_requests = 50
+text_input = None
     
 text_spinner_placeholder = st.spinner()
 
