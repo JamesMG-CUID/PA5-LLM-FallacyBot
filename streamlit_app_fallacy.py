@@ -100,7 +100,7 @@ if st.button("Submit", key="submit_button"):
     else:
         analyze_text(text_input)
         
-if st.button("Generate a Random Fallacy and Analyze it!", key="generate_button"):
+if st.button("Generate a Random Fallacy and Analyze it!", key="generate_random_button"):
     if st.session_state.n_requests >= max_requests:
         st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
     elif st.session_state.openai_api_key == "":
@@ -118,7 +118,7 @@ fallacy_type = st.selectbox(
 )
 st.markdown(f"<p style='font-size: calc(10px + 0.390625vw); font-style: italic; font-color: #777777;>{fallacy_dict[fallacy_type]}</p>", unsafe_allow_html=True)
 
-if st.button("Generate a Fallacy of this Type and Analyze it!", key="generate_button"):
+if st.button("Generate a Fallacy of this Type and Analyze it!", key="generate_custom_type_button"):
     if st.session_state.n_requests >= max_requests:
         st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
     elif st.session_state.openai_api_key == "":
