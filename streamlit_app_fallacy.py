@@ -35,10 +35,7 @@ text_spinner_placeholder = st.spinner()
 
 # Define functions
 
-def generate_fallacy(fallacy_type = "random"):
-    if fallacy_type == "random":
-        fallacy_type = random.choice(list(fallacy_dict.keys()))      # Randomly select a fallacy type if none was specified
-        
+def generate_fallacy(fallacy_type = "random"):      #if fallacy_type is not specified, generate a random fallacy        
     prompt = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         temperature=0.7,
@@ -52,7 +49,7 @@ def generate_fallacy(fallacy_type = "random"):
     return str(prompt.choices[0].message.content)
     
 
-def analyze_text(text_input):
+def analyze_text(text_input, seeded_fallacy =None):
     wait_message_list = [
     "Can a robot think?... I think so! Or do I?...",
     "Fallacybot totally isn't procrastinating on your assignment...",
@@ -70,13 +67,19 @@ def analyze_text(text_input):
     "Looking at memes... I mean, analyzing fallacies...",
 ]
     text_spinner_placeholder = st.spinner(text=random.choice(wait_message_list))
-
+    
     if not text_input:
         st.session_state.text_error = "Please enter your text"
         return
     else:
         st.session_state.text_error = None
-
+        
+    system_content = f"You are a fallacy checker bot that provides a list of (Fairly simple) explanations of fallacies in user input."
+    if seeded_fallacy:
+        user_content = f"Provide a (low-redundancy) list of fallacies (the first of which is definitely {seeded_fallacy}) from this text and explain what the fallacies are/mean : {text_input}"
+    else:
+        user_content = f"Provide a (low-redundancy) list of fallacies from this text and explain what the fallacies are/mean : {text_input}"
+        
     with text_spinner_placeholder:
         st.session_state.n_requests += 1
         response = openai.chat.completions.create(
@@ -85,8 +88,8 @@ def analyze_text(text_input):
             top_p=0.85,
             max_tokens=500,
             messages=[
-                {"role": "system", "content": "You are a fallacy checker bot that provides a list of (Fairly simple) explanations of fallacies in user input." },
-                {"role": "user", "content": f"Provide a (low-redundancy) list of fallacies from this text and explain what the fallacies are/mean : {text_input}"},
+                {"role": "system", "content": f"{system_content}" },
+                {"role": "user", "content": f"{user_content}"},
             ]
         )
         st.session_state.text = response
@@ -158,7 +161,7 @@ if current_mode == "Generate a Fallacy of a Specific Type":
         else:
             text_input = generate_fallacy(fallacy_type)
             st.session_state.last_input = text_input
-            analyze_text(text_input)
+            analyze_text(text_input, fallacy_type)
 
             
 ############################ MODE THREE ##########################################
@@ -171,7 +174,8 @@ if current_mode == "Generate a Random Fallacy":
             st.error("Please input your OpenAI API key in the sidebar to use this app.")
         else:
             #st.error(generate_fallacy())
-            text_input = generate_fallacy()
+            fallacy_type = random.choice(list(fallacy_dict.keys()))      # Randomly select a fallacy type if none was specified
+            text_input = generate_fallacy(fallacy_type)
             st.session_state.last_input = text_input
             analyze_text(text_input)       
 
