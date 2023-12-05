@@ -98,9 +98,10 @@ with st.sidebar:
 
 ############################ MODE SELECTOR ##########################################
         
-current_mode = st.selectbox(
-    key="current_mode_selectbox",
+current_mode = st.radio(
+    key="current_mode_radio",
     label="Select a mode:",
+    horizontal=True,
     index=0,
     options=["Analyze Your Text", "Generate a Fallacy of a Specific Type","Generate a Random Fallacy"]
 )
@@ -131,7 +132,7 @@ if current_mode == "Generate a Fallacy of a Specific Type":
         index=0,
         options=[fallacy_name for fallacy_name in fallacy_dict.keys()]
     )
-    st.markdown(f"<p style='font-size: calc(10px + 0.390625vw); font-style: italic; font-color: #777777;>{fallacy_dict[fallacy_type]}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='font-size: calc(10px + 0.390625vw); font-style: italic; font-color: #777777;>{fallacy_type}: {fallacy_dict[fallacy_type]}</p>", unsafe_allow_html=True)
 
     if st.button("Generate a Fallacy of this Type and Analyze it!", key="generate_custom_type_button"):
         if st.session_state.n_requests >= max_requests:
@@ -164,7 +165,5 @@ if st.session_state.text_error:
 if st.session_state.text:
     st.markdown("---")
     output = st.session_state.text
-    if not text_input:
-        text_input = "If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that."
     st.markdown(f"<h3 style='color: green; font-size: calc(30px + 0.78125vw)'>Here's what FallacyBot has to say:</h3><p style='color: white;font-size: calc(15px + 0.390625vw)'><br><p><i>\"{st.session_state.last_input}\"</i></p><br>{output.choices[0].message.content}</p>", unsafe_allow_html=True)
     image_spinner_placeholder = st.empty()
