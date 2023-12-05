@@ -1,0 +1,60 @@
+Accent: Emphasis that changes the meaning of the sentence.
+Accident: A general rule used to explain a specific case not covered by it.
+Affirming the Consequent: If A then B. B is true, so A is true.
+Amphiboly: A sentence has two different meanings.
+Appeal to Authority: Referencing an 'expert'.
+Appeal to Common Belief: If others believe it to be true, it must be true.
+Appeal to Common Practice: If others do it, it must be ok to do it too.
+Appeal to Fear: Gaining compliance through threat.
+Appeal to Flattery: Make them feel good.
+Appeal to Emotion: If it feels good, it must be true.
+Appeal to Novelty: Newer is better.
+Appeal to Pity: Going for the sympathy vote.
+Appeal to Ridicule: Mocking the other person's claim.
+Appeal to Spite: Play on their negative feelings for others.
+Appeal to Tradition: It has always been done this way, so this way is right.
+Appeal to Trust: Trust me, I'm a doctor.
+Argument from Ignorance: Accepting circumstantial evidence.
+Assertion: What I say is true.
+Attack the Person: Distracting them from their argument.
+Begging the Question: Circular reasoning to prove assumed premise.
+Butterfly Logic: How people often argue.
+Complex Question: two questions, one answer allowed.
+Composition: Generalizing from a few to the whole set.
+Conspiracy Theory: Reframe refutation as further proof.
+Denying the Antecedent: If A then B. A is false, so B is false.
+Division: Assuming the parts have the characteristics of the whole.
+Ecological fallacy: Conclusion about individual from group data.
+Equivocation: A single word with more than one meaning.
+Exception fallacy: Conclusions about group from individual data.
+Excluded Middle: Only extreme views are valid.
+False Analogy: X has property Y. Z is like X. So Z has property Y.
+False Cause: A causes B (but no proof).
+False Compromise: Extreme views are wrong. The middle way is right.
+False Effect: A is assumed to cause B. B is proven wrong, so A is wrong.
+False Dilemma: Choice is A or B. Rejecting A is selecting B.
+Four Terms: All A is B. All C is D. So all A is D.
+Gambler's Fallacy: Chance can be predicted.
+Hasty Generalization: Generalizing from too-small a sample.
+Illicit Major: All X is Y. No P (which is a subset of Y) is X. Therefore no P is Y.
+Illicit Minor: All X are Y. All X are P. Therefore all P are Y.
+In a Certain Respect and Simply: Extending assumed boundaries too far.
+Insignificance: Making a minor cause seem major.
+Logical Inconsistency: Arguments that contradict one another.
+Many Questions: overloading them with lots of questions.
+Misleading Vividness: a memorable few events prove high probability.
+Missing the Point: Drawing the wrong conclusion.
+Personal Inconsistency: Past words or deeds do not match claim.
+Poisoning the Well: Discrediting the person before they speak.
+Post Hoc: X follows Y. Therefore X is caused by Y.
+Red Herring: Distracting with an irrelevancy.
+Reductio ad Absurdum: A false X is silly, so X is true.
+Reification: Treating a concept as concrete reality.
+Repetition: Repeating something makes it more true.
+Slippery Slope: Loosely connected statements with ridiculous conclusion.
+Social Conformance: Agree with me or be socially isolated.
+Strawman: Attack a weak argument used by the other person.
+Style over Substance: An attractive presentation makes it more right.
+Undistributed Middle: All A is B. All C is B. Therefore all C is A.
+Unrepresentative Sample: What is true about any sample is also true about the population.
+Wishful Thinking: A is true because I want it to be true.
