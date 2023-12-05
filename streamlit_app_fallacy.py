@@ -21,6 +21,9 @@ if "text_error" not in st.session_state:
 
 if "text" not in st.session_state:
     st.session_state.text = None
+    
+if "last_input" not in st.session_state:
+    st.session_state.last_input = None
 
 if "n_requests" not in st.session_state:
     st.session_state.n_requests = 0
@@ -109,13 +112,14 @@ if current_mode == "Analyze Your Text":
         )
     
     if st.button("Submit Your Text", key="submit_button"):
-        if not text_input:
+        if not text_input:              # If the user didn't input any text, use the default text
             text_input = "If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that."
         if st.session_state.n_requests >= max_requests:
             st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
         elif st.session_state.openai_api_key == "":
             st.error("Please input your OpenAI API key in the sidebar to use this app.")
         else:
+            st.session_state.last_input = text_input
             analyze_text(text_input)
 
 ############################ MODE TWO ##########################################
@@ -135,6 +139,7 @@ if current_mode == "Generate a Fallacy of a Specific Type":
             st.error("Please input your OpenAI API key in the sidebar to use this app.")
         else:
             text_input = generate_fallacy(fallacy_type)
+            st.session_state.last_input = text_input
             analyze_text(text_input)
 
             
@@ -148,6 +153,7 @@ if current_mode == "Generate a Random Fallacy":
         else:
             #st.error(generate_fallacy())
             text_input = generate_fallacy()
+            st.session_state.last_input = text_input
             analyze_text(text_input)       
 
 
@@ -159,5 +165,5 @@ if st.session_state.text:
     output = st.session_state.text
     if not text_input:
         text_input = "If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that."
-    st.markdown(f"<h3 style='color: green; font-size: calc(30px + 0.78125vw)'>Here's what FallacyBot has to say:</h3><p style='color: white;font-size: calc(15px + 0.390625vw)'><br><p><i>\"{text_input}\"</i></p><br>{output.choices[0].message.content}</p>", unsafe_allow_html=True)
+    st.markdown(f"<h3 style='color: green; font-size: calc(30px + 0.78125vw)'>Here's what FallacyBot has to say:</h3><p style='color: white;font-size: calc(15px + 0.390625vw)'><br><p><i>\"{st.session_state.last_input}\"</i></p><br>{output.choices[0].message.content}</p>", unsafe_allow_html=True)
     image_spinner_placeholder = st.empty()
