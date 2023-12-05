@@ -1,6 +1,7 @@
 # Import from 3rd party libraries
 import streamlit as st
 import openai
+import random
 
 # Initialize
 st.cache_data.clear()
@@ -18,23 +19,24 @@ if "text" not in st.session_state:
 
 if "n_requests" not in st.session_state:
     st.session_state.n_requests = 0
+
+max_requests = 50
     
 text_spinner_placeholder = st.spinner()
 
 # Define functions
 
 def generate_fallacy():
-    with text_spinner_placeholder:
-        prompt = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
-            temperature=0.4,
-            top_p=0.8,
-            max_tokens=450,
-            messages=[
-                {"role": "system", "content": f"You are a fallacy generator bot."},
-                {"role": "user", "content": f"Generate a random fallacy."},
-            ]
-        )
+    prompt = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
+        temperature=0.65,
+        max_tokens=450,
+        seed=random.randint(0, 100000),
+        messages=[
+            {"role": "system", "content": f"You are a fallacy generator bot."},
+            {"role": "user", "content": f"Generate text containing a random fallacy."},
+        ]
+    )
     return prompt.choices[0].message.content
     
 
@@ -86,7 +88,7 @@ text_input = st.text_area(label="Input your text here", placeholder="If we let T
 if st.button("Submit"):
     if not text_input:
         text_input = "If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that."
-    if st.session_state.n_requests >= 5:
+    if st.session_state.n_requests >= max_requests:
         st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
     elif st.session_state.openai_api_key == "":
         st.error("Please input your OpenAI API key in the sidebar to use this app.")
@@ -94,7 +96,7 @@ if st.button("Submit"):
         analyze_text(text_input)
         
 if st.button("Generate Fallacy and Analyze"):
-    if st.session_state.n_requests >= 5:
+    if st.session_state.n_requests >= max_requests:
         st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
     elif st.session_state.openai_api_key == "":
         st.error("Please input your OpenAI API key in the sidebar to use this app.")
