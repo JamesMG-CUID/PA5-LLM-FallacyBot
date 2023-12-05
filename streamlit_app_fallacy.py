@@ -42,7 +42,7 @@ def generate_fallacy(fallacy_type = "random"):
         seed=random.randint(0, 100000),
         messages=[
             {"role": "system", "content": f"You are a fallacy generator bot."},
-            {"role": "user", "content": f"Generate text containing a {fallacy_type} (Explanation: {fallacy_type[fallacy_type]}) fallacy. Do not include the fallacy name in the text and output only the text (no polite message or context required)."},
+            {"role": "user", "content": f"Generate text containing a {fallacy_type} (Explanation: {fallacy_dict[fallacy_type]}) fallacy. Do not include the fallacy name in the text and output only the text (no polite message or context required)."},
         ]
     )
     return str(prompt.choices[0].message.content)
@@ -75,10 +75,10 @@ def analyze_text(text_input):
 st.set_page_config(page_title="FallacyBot", page_icon="🤖")
 
 explanation_text = """
-<h3 style='text-align: center; color: green; font-size: calc(30px + 0.78125vw);'> FallacyBot </h3>
-<h6 style='text-align: center;font-size: calc(20px + 0.59409375vw);'> Checking for <span style='color:red'>fallacies</span> in your text since 2023!</h6>
-<p style='font-size: calc(15px + 0.390625vw);'> For your convenience, a default example is provided. If you don't input any text, the bot will use the example text. </p>
-<p style='font-size: calc(15px + 0.390625vw);'> Fallacy (N.) - A mistaken belief, especially one based on unsound argument. </p>
+<h3 style='text-align: center; color: green; font-size: calc(25px + 0.78125vw);'> FallacyBot </h3>
+<h6 style='text-align: center;font-size: calc(15px + 0.59409375vw);'> Checking for <span style='color:red'>fallacies</span> in your text since 2023!</h6>
+<p style='font-size: calc(10px + 0.390625vw);'> For your convenience, a default example is provided. If you don't input any text, the bot will use the example text. </p>
+<p style='font-size: calc(10px + 0.390625vw);'> Fallacy (N.) - A mistaken belief, especially one based on unsound argument. </p>
 """
 st.markdown(explanation_text, unsafe_allow_html=True)
 
@@ -91,28 +91,32 @@ with st.sidebar:
         st.session_state.openai_api_key = openai_api_key
         openai.api_key = st.session_state.openai_api_key
         st.success("Your OpenAI API key was saved successfully!")
+        
+current_mode = st.selectbox(
+    key="current_mode_selectbox",
+    label="Select a mode:",
+    index=0,
+    options=["Analyze Your Text", "Generate a Fallacy of a Specific Type","Generate a Random Fallacy"]
+)
+############################ MODE ONE ##########################################
+if current_mode == "Analyze Your Text":
+    
+    text_input = st.text_area(          
+        label="Input your text here",
+        placeholder="If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that."
+        )
+    
+    if st.button("Submit Your Text", key="submit_button"):
+        if not text_input:
+            text_input = "If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that."
+        if st.session_state.n_requests >= max_requests:
+            st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
+        elif st.session_state.openai_api_key == "":
+            st.error("Please input your OpenAI API key in the sidebar to use this app.")
+        else:
+            analyze_text(text_input)
 
-text_input = st.text_area(label="Input your text here", placeholder="If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that.")
-if st.button("Submit Your Text", key="submit_button"):
-    if not text_input:
-        text_input = "If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that."
-    if st.session_state.n_requests >= max_requests:
-        st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
-    elif st.session_state.openai_api_key == "":
-        st.error("Please input your OpenAI API key in the sidebar to use this app.")
-    else:
-        analyze_text(text_input)
-        
-if st.button("Generate a Random Fallacy and Analyze it!", key="generate_random_button"):
-    if st.session_state.n_requests >= max_requests:
-        st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
-    elif st.session_state.openai_api_key == "":
-        st.error("Please input your OpenAI API key in the sidebar to use this app.")
-    else:
-        #st.error(generate_fallacy())
-        text_input = generate_fallacy()
-        analyze_text(text_input)
-        
+############################ MODE TWO ##########################################
 fallacy_type = st.selectbox(
     key="fallacy_type_selectbox",
     label="Generate text containing a fallacy of this type:",
@@ -129,6 +133,20 @@ if st.button("Generate a Fallacy of this Type and Analyze it!", key="generate_cu
     else:
         text_input = generate_fallacy(fallacy_type)
         analyze_text(text_input)
+
+            
+############################ MODE THREE ##########################################
+if current_mode == "Generate a Random Fallacy":        
+    if st.button("Generate a Random Fallacy and Analyze it!", key="generate_random_button"):
+        if st.session_state.n_requests >= max_requests:
+            st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
+        elif st.session_state.openai_api_key == "":
+            st.error("Please input your OpenAI API key in the sidebar to use this app.")
+        else:
+            #st.error(generate_fallacy())
+            text_input = generate_fallacy()
+            analyze_text(text_input)       
+
 
 
 if st.session_state.text_error:
