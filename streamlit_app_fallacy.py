@@ -4,6 +4,11 @@ import openai
 import random
 
 # Initialize
+fallacy_dict = {}
+fallacy_raw = open("./data/fallacies.txt", "r")
+for line in fallacy_raw.readlines():
+    fallacy_dict.update({line.split(":")[0]: line.split(":")[1]})       # {fallacy_name: fallacy_description}
+ 
 st.cache_data.clear()
 
 if "openai_api_key" not in st.session_state:
@@ -26,7 +31,7 @@ text_spinner_placeholder = st.spinner()
 
 # Define functions
 
-def generate_fallacy():
+def generate_fallacy(fallacy_type = "random"):
     prompt = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         temperature=0.7,
@@ -34,7 +39,7 @@ def generate_fallacy():
         seed=random.randint(0, 100000),
         messages=[
             {"role": "system", "content": f"You are a fallacy generator bot."},
-            {"role": "user", "content": f"Generate text containing a random fallacy. Do not include the fallacy name in the text and output only the text (no polite message or context required)."},
+            {"role": "user", "content": f"Generate text containing a {fallacy_type} fallacy. Do not include the fallacy name in the text and output only the text (no polite message or context required)."},
         ]
     )
     return str(prompt.choices[0].message.content)
@@ -57,7 +62,7 @@ def analyze_text(text_input):
             top_p=0.85,
             max_tokens=500,
             messages=[
-                {"role": "system", "content": "You are a fallacy checker bot that provides a list of (Fairly simple) explanations of fallacies in user input. (If you find none at all, just say 'Fallacy-free!')" },
+                {"role": "system", "content": "You are a fallacy checker bot that provides a list of (Fairly simple) explanations of fallacies in user input." },
                 {"role": "user", "content": f"Provide a (low-redundancy) list of fallacies from this text and explain what the fallacies are/mean : {text_input}"},
             ]
         )
@@ -67,10 +72,10 @@ def analyze_text(text_input):
 st.set_page_config(page_title="FallacyBot", page_icon="🤖")
 
 explanation_text = """
-<h3 style='text-align: center; color: green;'> FallacyBot </h3>
-<h6 style='text-align: center'> Checking for <span style='color:red'>fallacies</span> in your text since 2023!</h6>
-<p> For your convenience, a default example is provided. If you don't input any text, the bot will use the example text. </p>
-<p> Fallacy (N.) - A mistaken belief, especially one based on unsound argument. </p>
+<h3 style='text-align: center; color: green; font-size: calc(30px + 0.78125vw);'> FallacyBot </h3>
+<h6 style='text-align: center;font-size: calc(20px + 0.59409375vw);'> Checking for <span style='color:red'>fallacies</span> in your text since 2023!</h6>
+<p style='font-size: calc(15px + 0.390625vw);'> For your convenience, a default example is provided. If you don't input any text, the bot will use the example text. </p>
+<p style='font-size: calc(15px + 0.390625vw);'> Fallacy (N.) - A mistaken belief, especially one based on unsound argument. </p>
 """
 st.markdown(explanation_text, unsafe_allow_html=True)
 
@@ -105,6 +110,21 @@ if st.button("Generate a Random Fallacy and Analyze it!", key="generate_button")
         text_input = generate_fallacy()
         analyze_text(text_input)
         
+fallacy_type = st.selectbox(
+    label="Generate text containing a fallacy of this type:",
+    index=0,
+    options=[fallacy_name for fallacy_name in fallacy_dict.keys()]
+)
+st.markdown(f"<p style='font-size: calc(10px + 0.390625vw); font-style: italic; font-color: #777777;>{fallacy_dict[fallacy_type]}</p>", unsafe_allow_html=True)
+
+if st.button("Generate a Fallacy of this Type and Analyze it!", key="generate_button"):
+    if st.session_state.n_requests >= max_requests:
+        st.error("You have reached the maximum number of requests for this session. Please refresh the page to start a new session.") 
+    elif st.session_state.openai_api_key == "":
+        st.error("Please input your OpenAI API key in the sidebar to use this app.")
+    else:
+        text_input = generate_fallacy(fallacy_type)
+        analyze_text(text_input)
 
 
 if st.session_state.text_error:
@@ -115,5 +135,5 @@ if st.session_state.text:
     output = st.session_state.text
     if not text_input:
         text_input = "If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that."
-    st.markdown(f"<h3 style='color: green;'>Here's what FallacyBot has to say:</h3><p style='color: white;'><br><p><i>\"{text_input}\"</i></p><br>{output.choices[0].message.content}</p>", unsafe_allow_html=True)
+    st.markdown(f"<h3 style='color: green; font-size: calc(30px + 0.78125vw)'>Here's what FallacyBot has to say:</h3><p style='color: white;font-size: calc(15px + 0.390625vw)'><br><p><i>\"{text_input}\"</i></p><br>{output.choices[0].message.content}</p>", unsafe_allow_html=True)
     image_spinner_placeholder = st.empty()
