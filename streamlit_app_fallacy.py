@@ -34,7 +34,7 @@ def generate_fallacy():
         seed=random.randint(0, 100000),
         messages=[
             {"role": "system", "content": f"You are a fallacy generator bot."},
-            {"role": "user", "content": f"Generate text containing a random fallacy. Do not include the fallacy name in the text and output only the text (no polite message required)."},
+            {"role": "user", "content": f"Generate text containing a random fallacy. Do not include the fallacy name in the text and output only the text (no polite message or context required)."},
         ]
     )
     return str(prompt.choices[0].message.content)
@@ -56,8 +56,8 @@ def analyze_text(text_input):
             temperature=0.5,
             max_tokens=450,
             messages=[
-                {"role": "system", "content": "You are a fallacy checker bot that outputs in formatted html (Feel free to use color for emphasis). Provide a list of (Fairly simple) explanations if you find fallacies in user input."},
-                {"role": "user", "content": f"Provide a list of fallacies from this text and explain what the fallacies are/mean (If there are none then just say 'Fallacy-Free!'): {text_input}"},
+                {"role": "system", "content": "You are a fallacy checker bot that provides a list of (Fairly simple) explanations of fallacies in user input.(If there are none then just say 'Fallacy-Free!')"},
+                {"role": "user", "content": f"Provide a list of fallacies from this text and explain what the fallacies are/mean : {text_input}"},
             ]
         )
         st.session_state.text = response
