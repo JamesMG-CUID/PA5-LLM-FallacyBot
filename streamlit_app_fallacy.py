@@ -29,7 +29,7 @@ text_spinner_placeholder = st.spinner()
 def generate_fallacy():
     prompt = openai.chat.completions.create(
         model="gpt-3.5-turbo",
-        temperature=0.65,
+        temperature=0.7,
         max_tokens=200,
         seed=random.randint(0, 100000),
         messages=[
@@ -53,11 +53,12 @@ def analyze_text(text_input):
         st.session_state.n_requests += 1
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
-            temperature=0.5,
-            max_tokens=450,
+            temperature=0.35,
+            top_p=0.85,
+            max_tokens=100,
             messages=[
-                {"role": "system", "content": "You are a fallacy checker bot that provides a list of (Fairly simple) explanations of fallacies in user input.(If there are none then just say 'Fallacy-Free!')"},
-                {"role": "user", "content": f"Provide a list of fallacies from this text and explain what the fallacies are/mean : {text_input}"},
+                {"role": "system", "content": "You are a fallacy checker bot that provides a list of (Fairly simple) explanations of fallacies in user input. (If there are none then just say 'Fallacy-Free!')"},
+                {"role": "user", "content": f"Provide a (low-redundancy) list of fallacies from this text and explain what the fallacies are/mean : {text_input}"},
             ]
         )
         st.session_state.text = response
@@ -84,7 +85,7 @@ with st.sidebar:
         st.success("Your OpenAI API key was saved successfully!")
 
 text_input = st.text_area(label="Input your text here", placeholder="If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that.")
-if st.button("Submit Your Fallacy", key="submit_button"):
+if st.button("Submit", key="submit_button"):
     if not text_input:
         text_input = "If we let Timmy skip school, then soon all the kids will be skipping school, and we can't have that."
     if st.session_state.n_requests >= max_requests:
