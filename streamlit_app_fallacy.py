@@ -30,14 +30,14 @@ def generate_fallacy():
     prompt = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         temperature=0.65,
-        max_tokens=450,
+        max_tokens=200,
         seed=random.randint(0, 100000),
         messages=[
             {"role": "system", "content": f"You are a fallacy generator bot."},
-            {"role": "user", "content": f"Generate text containing a random fallacy."},
+            {"role": "user", "content": f"Generate text containing a random fallacy. Do not include the fallacy name in the text and output only the text (no polite message required)."},
         ]
     )
-    return prompt.choices[0].message.content
+    return str(prompt.choices[0].message.content)
     
 
 def analyze_text(text_input):
@@ -100,8 +100,8 @@ if st.button("Generate Fallacy and Analyze", key="generate_button"):
     elif st.session_state.openai_api_key == "":
         st.error("Please input your OpenAI API key in the sidebar to use this app.")
     else:
-        st.error(generate_fallacy())
-        #analyze_text(generate_fallacy())
+        #st.error(generate_fallacy())
+        analyze_text(generate_fallacy())
         
 
 
