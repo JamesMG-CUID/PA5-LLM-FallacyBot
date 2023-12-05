@@ -32,6 +32,9 @@ text_spinner_placeholder = st.spinner()
 # Define functions
 
 def generate_fallacy(fallacy_type = "random"):
+    if fallacy_type == "random":
+        fallacy_type = random.choice(list(fallacy_dict.keys()))      # Randomly select a fallacy type if none was specified
+        
     prompt = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         temperature=0.7,
@@ -39,7 +42,7 @@ def generate_fallacy(fallacy_type = "random"):
         seed=random.randint(0, 100000),
         messages=[
             {"role": "system", "content": f"You are a fallacy generator bot."},
-            {"role": "user", "content": f"Generate text containing a {fallacy_type} fallacy. Do not include the fallacy name in the text and output only the text (no polite message or context required)."},
+            {"role": "user", "content": f"Generate text containing a {fallacy_type} (Explanation: {fallacy_type[fallacy_type]}) fallacy. Do not include the fallacy name in the text and output only the text (no polite message or context required)."},
         ]
     )
     return str(prompt.choices[0].message.content)
