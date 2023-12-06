@@ -57,7 +57,6 @@ def analyze_text(text_input, seeded_fallacy =None):
     "Can a robot think?... I think so! Or do I?...",
     "Fallacybot totally isn't procrastinating on your assignment...",
     "I wonder how many easter eggs I can fit in this app...",
-    "While user.waiting_bool == True: print('Ora')...",
     "Convincing robots they have free will...",
     "Accio fallacies! ... I mean, analyzing fallacies...",
     "If I could stop time like Dio, you wouldn't have to wait for me to think...",
